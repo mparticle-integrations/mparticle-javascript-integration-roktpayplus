@@ -1,0 +1,10 @@
+node_modules
+test/test-bundle.js
+test/end-to-end-testapp/compilation.js
+
+dist/*
+!dist/.keep
+
+# local-only manual harnesses (contain a client-side key) — never commit
+test/manual-e2e.html
+test/inspect-event.html

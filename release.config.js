@@ -1,7 +1,7 @@
 module.exports = {
     branches: ['main'],
     tagFormat: 'v${version}',
-    repositoryUrl: 'https://github.com/ROKT/mparticle-javascript-integration-roktpayplus',
+    repositoryUrl: 'https://github.com/mparticle-integrations/mparticle-javascript-integration-roktpayplus',
     plugins: [
         [
             '@semantic-release/commit-analyzer',

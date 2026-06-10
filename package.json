@@ -19,7 +19,10 @@
     "dist/RoktPayPlus-Kit.iife.js",
     "dist/RoktPayPlus-Kit.d.ts"
   ],
-  "repository": "https://github.com/ROKT/mparticle-javascript-integration-roktpayplus",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mparticle-integrations/mparticle-javascript-integration-roktpayplus.git"
+  },
   "scripts": {
     "build": "vite build",
     "build:watch": "vite build --watch",

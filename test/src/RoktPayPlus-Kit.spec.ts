@@ -121,6 +121,26 @@ describe('RoktPayPlusKit', () => {
     });
   });
 
+  describe('gwpApproved setting', () => {
+    it('emits gwpApproved for the configured custom event, with the event attributes as detail', () => {
+      const kit = new RoktPayPlusKit();
+      kit.init({ gwpApproved: 'Gift Purchase Completed' });
+      kit.process(customEvent('Gift Purchase Completed', { sku: 'gwp-123', amount: '49.99' }));
+      const gwp = ofType('gwpApproved');
+      expect(gwp.length).toBe(1);
+      expect(gwp[0].message.detail).toEqual({ sku: 'gwp-123', amount: '49.99' });
+      expect(gwp[0].message.trigger).toBe("logEvent('Gift Purchase Completed')");
+      expect(ofType('approved').length).toBe(0);
+    });
+
+    it('suppresses the default conversion fallback once gwpApproved is configured', () => {
+      const kit = new RoktPayPlusKit();
+      kit.init({ gwpApproved: 'Gift Purchase Completed' });
+      kit.process(customEvent('conversion'));
+      expect(ofType('approved').length).toBe(0);
+    });
+  });
+
   describe('embedding guard', () => {
     it('makes no postMessage calls when not framed (parent === self)', () => {
       // Restore the real window.parent so the page looks top-level (jsdom: parent === window).

@@ -10,8 +10,8 @@ The kit loads alongside the mParticle web SDK and receives the events your appli
 | :-- | :-- |
 | `initiated` | the kit initializes (application loaded) |
 | `stepComplete` | a configured funnel-step screen is viewed |
-| `approved` | the configured conversion event or screen |
-| `pending`, `loggedIn`, `accountCreated`, `offerSaved`, `purchaseCompleted`, `formSubmitted`, `pendingSuccess`, `close`, `removeLoadingOverlay` | the matching configured event or screen |
+| `approved` | the configured conversion event |
+| every other Pay+ signal (`pending`, `accountCreated`, `purchaseCompleted`, ...) | the matching configured custom event |
 
 ## Configuration
 
@@ -21,26 +21,7 @@ Funnel progression is driven by **page view events**, matched on the screen name
 
 The screen name is read from the page view's `screen_name` attribute (falling back to the page name when that attribute is absent), so the names you list in `progressionScreenNames` are the `screen_name` values your application sends.
 
-Page view setting:
-
-| Setting | Maps to |
-| :-- | :-- |
-| `progressionScreenNames` | `stepComplete` (one per listed screen) |
-
-Custom event settings:
-
-| Setting | Maps to |
-| :-- | :-- |
-| `approvedEventName` | `approved` |
-| `pendingEventName` | `pending` |
-| `loggedInEventName` | `loggedIn` |
-| `accountCreatedEventName` | `accountCreated` |
-| `offerSavedEventName` | `offerSaved` |
-| `purchaseCompletedEventName` | `purchaseCompleted` |
-| `formSubmittedEventName` | `formSubmitted` |
-| `pendingSuccessEventName` | `pendingSuccess` |
-| `closeEventName` | `close` |
-| `removeLoadingOverlayEventName` | `removeLoadingOverlay` |
+`progressionScreenNames` lists the screens that emit `stepComplete`. Each custom-event setting maps an event name to the Pay+ signal of the same name: `approvedEventName` maps to `approved`, `purchaseCompletedEventName` maps to `purchaseCompleted`, and so on. The full list of fields, each with its description, appears in the connection settings in the mParticle dashboard.
 
 `initiated` is emitted automatically when the kit initializes. If no settings are provided, the kit applies a default mapping: each page view is treated as a funnel step, and a custom event named `conversion` is treated as the approval.
 

@@ -55,6 +55,7 @@ const SIGNALS = {
   PENDING_SUCCESS: 'pendingSuccess',
   CLOSE: 'close',
   REMOVE_LOADING_OVERLAY: 'removeLoadingOverlay',
+  GWP_APPROVED: 'gwpApproved',
 } as const;
 
 const DEFAULT_CONVERSION_EVENT_NAME = 'conversion';
@@ -71,6 +72,7 @@ const EVENT_SETTING_TO_SIGNAL: ReadonlyArray<{ setting: keyof RoktPayPlusKitSett
   { setting: 'pendingSuccessEventName', signal: SIGNALS.PENDING_SUCCESS },
   { setting: 'closeEventName', signal: SIGNALS.CLOSE },
   { setting: 'removeLoadingOverlayEventName', signal: SIGNALS.REMOVE_LOADING_OVERLAY },
+  { setting: 'gwpApprovedEventName', signal: SIGNALS.GWP_APPROVED },
 ];
 
 // ============================================================
@@ -91,6 +93,8 @@ interface RoktPayPlusKitSettings {
   closeEventName?: string;
   removeLoadingOverlayEventName?: string;
   conversionEventName?: string;
+  // Custom event name(s) that signal a gift-with-purchase conversion.
+  gwpApprovedEventName?: string;
 }
 
 interface KitConfig {

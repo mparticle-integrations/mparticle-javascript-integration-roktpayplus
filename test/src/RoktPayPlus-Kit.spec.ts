@@ -121,10 +121,10 @@ describe('RoktPayPlusKit', () => {
     });
   });
 
-  describe('gwpApproved setting', () => {
+  describe('gwpApprovedEventName setting', () => {
     it('emits gwpApproved for the configured custom event, with the event attributes as detail', () => {
       const kit = new RoktPayPlusKit();
-      kit.init({ gwpApproved: 'Gift Purchase Completed' });
+      kit.init({ gwpApprovedEventName: 'Gift Purchase Completed' });
       kit.process(customEvent('Gift Purchase Completed', { sku: 'gwp-123', amount: '49.99' }));
       const gwp = ofType('gwpApproved');
       expect(gwp.length).toBe(1);
@@ -133,9 +133,9 @@ describe('RoktPayPlusKit', () => {
       expect(ofType('approved').length).toBe(0);
     });
 
-    it('suppresses the default conversion fallback once gwpApproved is configured', () => {
+    it('suppresses the default conversion fallback once gwpApprovedEventName is configured', () => {
       const kit = new RoktPayPlusKit();
-      kit.init({ gwpApproved: 'Gift Purchase Completed' });
+      kit.init({ gwpApprovedEventName: 'Gift Purchase Completed' });
       kit.process(customEvent('conversion'));
       expect(ofType('approved').length).toBe(0);
     });

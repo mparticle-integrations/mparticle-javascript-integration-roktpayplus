@@ -14,8 +14,9 @@ const c = {
   FORM_SUBMITTED: "formSubmitted",
   PENDING_SUCCESS: "pendingSuccess",
   CLOSE: "close",
-  REMOVE_LOADING_OVERLAY: "removeLoadingOverlay"
-}, f = "conversion", m = [
+  REMOVE_LOADING_OVERLAY: "removeLoadingOverlay",
+  GWP_APPROVED: "gwpApproved"
+}, f = "conversion", p = [
   { setting: "approvedEventName", signal: i.APPROVED },
   { setting: "pendingEventName", signal: i.PENDING },
   { setting: "loggedInEventName", signal: i.LOGGED_IN },
@@ -25,14 +26,15 @@ const c = {
   { setting: "formSubmittedEventName", signal: i.FORM_SUBMITTED },
   { setting: "pendingSuccessEventName", signal: i.PENDING_SUCCESS },
   { setting: "closeEventName", signal: i.CLOSE },
-  { setting: "removeLoadingOverlayEventName", signal: i.REMOVE_LOADING_OVERLAY }
+  { setting: "removeLoadingOverlayEventName", signal: i.REMOVE_LOADING_OVERLAY },
+  { setting: "gwpApprovedEventName", signal: i.GWP_APPROVED }
 ];
 function E(e) {
   return !e || typeof e != "string" ? [] : e.split(",").map((t) => t.trim()).filter(Boolean);
 }
 function d(e) {
   const t = E(e.progressionScreenNames), n = {};
-  for (const { setting: o, signal: r } of m)
+  for (const { setting: o, signal: r } of p)
     for (const l of E(e[o]))
       n[l] = r;
   return {
@@ -43,7 +45,7 @@ function d(e) {
     defaultConversionEventName: e.conversionEventName || f
   };
 }
-function p(e) {
+function m(e) {
   return e.EventAttributes && e.EventAttributes.screen_name || e.EventName;
 }
 function N() {
@@ -82,7 +84,7 @@ class u {
   // Page views are funnel progression only. A configured progression screen (or any page
   // view when none are configured) emits stepComplete. A page view is never the conversion.
   handlePageView(t) {
-    const n = p(t);
+    const n = m(t);
     if (!n)
       return;
     (!this.config.progressionConfigured || this.config.progressionScreens.indexOf(n) !== -1) && a(i.STEP_COMPLETE, { step: n }, "logPageView('" + n + "')");
@@ -100,10 +102,10 @@ class u {
     !this.config.eventConfigured && n === this.config.defaultConversionEventName && a(i.APPROVED, t.EventAttributes || {}, "logEvent('" + n + "', Transaction)");
   }
 }
-function S() {
+function v() {
   return 184;
 }
-function v(e) {
+function S(e) {
   if (!g(e)) {
     window.console.log("'config' must be an object. You passed in a " + typeof e);
     return;
@@ -112,10 +114,10 @@ function v(e) {
 }
 if (typeof window < "u") {
   const e = window;
-  e.mParticle && typeof e.mParticle.addForwarder == "function" && e.mParticle.addForwarder({ name: s, constructor: u, getId: S });
+  e.mParticle && typeof e.mParticle.addForwarder == "function" && e.mParticle.addForwarder({ name: s, constructor: u, getId: v });
 }
 export {
   u as RoktPayPlusKit,
-  v as register
+  S as register
 };
 //# sourceMappingURL=RoktPayPlus-Kit.esm.js.map

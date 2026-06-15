@@ -29,6 +29,7 @@ export declare interface RoktPayPlusKitSettings {
     closeEventName?: string;
     removeLoadingOverlayEventName?: string;
     conversionEventName?: string;
+    gwpApprovedEventName?: string;
 }
 
 export { }

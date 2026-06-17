@@ -181,9 +181,7 @@ jobs:
               run: |
                   git push --delete origin release/${{ github.run_number }}
 
-            # GitHub Release creation lives at the end of this job so it reuses the App
-            # token and main checkout above, and so a failure here cannot fail npm publish,
-            # the tag, or the branch sync (all already done by the steps above).
+            # Runs last so a Release failure can't block npm publish, the tag, or the sync.
             - name: Resolve released version
               id: version
               if: ${{ github.event.inputs.dryRun == 'false' }}
@@ -194,9 +192,7 @@ jobs:
               uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
               with:
                   makeLatest: true
-                  # The tag already exists (pushed by semantic-release); attach a Release to it.
                   allowUpdates: true
-                  # Let GitHub auto-generate the release notes from merged PRs/commits.
                   generateReleaseNotes: true
                   tag: ${{ steps.version.outputs.release-version }}
                   artifacts: 'dist/RoktPayPlus-Kit.common.js,dist/RoktPayPlus-Kit.esm.js,dist/RoktPayPlus-Kit.iife.js,dist/RoktPayPlus-Kit.d.ts'

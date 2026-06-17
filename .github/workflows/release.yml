@@ -189,13 +189,6 @@ jobs:
               if: ${{ github.event.inputs.dryRun == 'false' }}
               run: echo "release-version=v$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
 
-            - name: Extract release notes from CHANGELOG
-              id: extract-release-notes
-              if: ${{ github.event.inputs.dryRun == 'false' }}
-              uses: ffurrer2/extract-release-notes@273da39a24fb7db106a35526c8162815faffd31d # v3.1.0
-              with:
-                  changelog_file: CHANGELOG.md
-
             - name: Create GitHub release
               if: ${{ github.event.inputs.dryRun == 'false' }}
               uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
@@ -203,9 +196,8 @@ jobs:
                   makeLatest: true
                   # The tag already exists (pushed by semantic-release); attach a Release to it.
                   allowUpdates: true
+                  # Let GitHub auto-generate the release notes from merged PRs/commits.
+                  generateReleaseNotes: true
                   tag: ${{ steps.version.outputs.release-version }}
                   artifacts: 'dist/RoktPayPlus-Kit.common.js,dist/RoktPayPlus-Kit.esm.js,dist/RoktPayPlus-Kit.iife.js,dist/RoktPayPlus-Kit.d.ts'
                   token: ${{ steps.app_token.outputs.token }}
-                  body: |
-                      ## Release notes:
-                      ${{ steps.extract-release-notes.outputs.release_notes }}

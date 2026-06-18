@@ -47,17 +47,6 @@ module.exports = {
             },
         ],
         [
-            '@semantic-release/github',
-            {
-                assets: [
-                    'dist/RoktPayPlus-Kit.common.js',
-                    'dist/RoktPayPlus-Kit.esm.js',
-                    'dist/RoktPayPlus-Kit.iife.js',
-                    'dist/RoktPayPlus-Kit.d.ts',
-                ],
-            },
-        ],
-        [
             '@semantic-release/git',
             {
                 assets: ['package.json', 'package-lock.json', 'CHANGELOG.md'],
